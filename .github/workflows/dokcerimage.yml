@@ -1,0 +1,21 @@
+name: Docker Python CI
+
+on: [push]
+
+jobs:
+
+  build:
+ 
+    runs-on: ubuntu-latest
+ 
+    steps:
+    - uses: actions/checkout@v1
+    
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag pramodhkumarm97/python-sample-app:v1.0
+      
+    - name: Docker credential
+      run: docker login --username=${{secrets.docker_user}} --password=${{secrets.docker_pass}}
+      
+    - name: docker push
+      run: docker push pramodhkumarm97/python-sample-app:v1.0
